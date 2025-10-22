@@ -1,0 +1,33 @@
+---
+base_path: "/home/bruno.garcia/bruno.garcia/projeto_doutorado/2025/NF2_Bruno/results_extrapolation/extrapolation"
+work_directory: "/home/bruno.garcia/bruno.garcia/projeto_doutorado/2025/NF2_Bruno/results_extrapolation/extrapolation/outputs_extrapolation"
+logging:
+  project: nf2-extrapolation
+  name: ar_11158_first_results
+data:
+  type: fits
+  slices:
+    - fits_path:
+        Br: "/home/bruno.garcia/bruno.garcia/projeto_doutorado/2025/NF2_Bruno/results_extrapolation/data/AR_11158/hmi.sharp_cea_720s.377.20110215_013600_TAI.Br.fits"
+        Bt: "/home/bruno.garcia/bruno.garcia/projeto_doutorado/2025/NF2_Bruno/results_extrapolation/data/AR_11158/hmi.sharp_cea_720s.377.20110215_013600_TAI.Bt.fits"
+        Bp: "/home/bruno.garcia/bruno.garcia/projeto_doutorado/2025/NF2_Bruno/results_extrapolation/data/AR_11158/hmi.sharp_cea_720s.377.20110215_013600_TAI.Bp.fits"
+      error_path:
+        Br_err: "/home/bruno.garcia/bruno.garcia/projeto_doutorado/2025/NF2_Bruno/results_extrapolation/data/AR_11158/hmi.sharp_cea_720s.377.20110215_013600_TAI.Br_err.fits"
+        Bt_err: "/home/bruno.garcia/bruno.garcia/projeto_doutorado/2025/NF2_Bruno/results_extrapolation/data/AR_11158/hmi.sharp_cea_720s.377.20110215_013600_TAI.Bt_err.fits"
+        Bp_err: "/home/bruno.garcia/bruno.garcia/projeto_doutorado/2025/NF2_Bruno/results_extrapolation/data/AR_11158/hmi.sharp_cea_720s.377.20110215_013600_TAI.Bp_err.fits"
+  num_workers: 12 #CPUs
+  iterations: 10000
+model:
+  type: vector_potential
+  dim: 256
+training:
+  epochs: 15
+  loss_config:
+    - type: boundary
+      name: boundary
+      lambda: 1.0 #{start: 1.0e+3, end: 1.0, iterations: 5.0e+4}
+      ds_id: [boundary_01, potential]
+    - type: force_free
+      lambda: 1.0e-1
+    - type: divergence
+      lambda: 1.0e-1
